@@ -51,4 +51,4 @@
         - token :  증명!
             https://www.vaadata.com/blog/jwt-tokens-and-security-working-principles-and-use-cases/
             https://hanamon.kr/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-http-http%EB%9E%80-%ED%8A%B9%EC%A7%95-%EB%AC%B4%EC%83%81%ED%83%9C-%EB%B9%84%EC%97%B0%EA%B2%B0%EC%84%B1/
-        - 
+    
