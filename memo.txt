@@ -1,6 +1,54 @@
 *필요한 프로그램*
-postman
-https://www.postman.com/downloads/
 
-mongoDB
-https://www.mongodb.com/try/download/community
+1.postman
+    https://www.postman.com/downloads/
+
+2.mongoDB
+    https://www.mongodb.com/try/download/community
+
+설명)mern stack
+    MongoDB, Express, React, and Node.js.
+
+3.express 에서 터미널 입력 사이트
+    https://expressjs.com/ko/starter/generator.html
+
+    터미널은 cmd에서
+    1) express를 설치
+        npm install express-generator -g
+    2) list 확인
+        npm list -g
+    3) view파일없이 서버라는 파일을 만들어라
+        express --no-view server
+    4) 필요한 패키지(경로는 server안에)
+        - compression
+        - cookie-parser 이미 있음
+        - cors
+        - dotenv
+        - express-validator
+        - http-errors
+        - jsonwebtoken
+        - luxon
+        - mongoose
+        - morgan
+        - multer
+        - passport
+        - passport-jwt
+    5) app.js에서 패키지를 가져온다
+    6) server안에 .env파일을 생성
+    7) (설명)mvc patten
+        - model
+        - controller
+        - view
+    8) server안에 models파일 생성
+        - Article.js
+        - Comment.js
+        - Favorite.js
+        - Follow.js
+        - User.js
+    9) User.js 작성
+        - Schema (유저데이터의 구조)
+            https://www.fivetran.com/learn/what-is-a-database-schema
+        - token :  증명!
+            https://www.vaadata.com/blog/jwt-tokens-and-security-working-principles-and-use-cases/
+            https://hanamon.kr/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-http-http%EB%9E%80-%ED%8A%B9%EC%A7%95-%EB%AC%B4%EC%83%81%ED%83%9C-%EB%B9%84%EC%97%B0%EA%B2%B0%EC%84%B1/
+        - 
