@@ -1,0 +1,6 @@
+*필요한 프로그램*
+postman
+https://www.postman.com/downloads/
+
+mongoDB
+https://www.mongodb.com/try/download/community
