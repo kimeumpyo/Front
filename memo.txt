@@ -75,7 +75,7 @@
     18) profileController.js 작성
     
     19) server안에 auth 폴더생성
-    20) auth 폴더 안에 jwStrategy.js 생성 및 작성
+    20) auth 폴더 안에 jwtStrategy.js 생성 및 작성
 
     21) server안에 utils 폴더생성
     22) utils 폴더 안에 fileHandler.js 생성 및 작성
@@ -85,3 +85,6 @@
 
     25) routes에 users.js는 필요없으니 삭제
     26) routes의 index.js 작성
+
+    참고 사이트
+    https://www.passportjs.org/packages/
