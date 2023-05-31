@@ -15,11 +15,15 @@
     터미널은 cmd에서
     1) express를 설치
         npm install express-generator -g
+    
     2) list 확인
         npm list -g
+    
     3) view파일없이 서버라는 파일을 만들어라
         express --no-view server
+    
     4) 필요한 패키지(경로는 server안에)
+        npm install 아래 패키지들을 설치한다 띄어쓰기 하면 한번에 설치가 가능!
         - compression
         - cookie-parser 이미 있음
         - cors
@@ -33,18 +37,21 @@
         - multer
         - passport
         - passport-jwt
+    
     5) app.js에서 패키지를 가져온다
-    6) server안에 .env파일을 생성
+    6) server안에 .env파일을 생성 (환경변수) 데이터베이스, 토큰에 사용되는 시크릿
     7) (설명)mvc patten
         - model
         - controller
         - view
+    
     8) server안에 models파일 생성
         - Article.js
         - Comment.js
         - Favorite.js
         - Follow.js
         - User.js
+    
     9) User.js 작성
         - Schema (유저데이터의 구조)
             https://www.fivetran.com/learn/what-is-a-database-schema
@@ -52,3 +59,29 @@
             https://www.vaadata.com/blog/jwt-tokens-and-security-working-principles-and-use-cases/
             https://hanamon.kr/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-http-http%EB%9E%80-%ED%8A%B9%EC%A7%95-%EB%AC%B4%EC%83%81%ED%83%9C-%EB%B9%84%EC%97%B0%EA%B2%B0%EC%84%B1/
     
+    10) Article.js 작성
+    11) Favorite.js 작성
+    12) Comment.js 작성
+    13) server안에 controller 폴더생성
+    14) controller파일생성
+        - articleController.js
+        - commentController.js
+        - profileController.js
+        - userController.js
+
+    15) userCOntroller.js 작성
+    16) articleController.js 작성
+    17) commentController.js 작성
+    18) profileController.js 작성
+    
+    19) server안에 auth 폴더생성
+    20) auth 폴더 안에 jwStrategy.js 생성 및 작성
+
+    21) server안에 utils 폴더생성
+    22) utils 폴더 안에 fileHandler.js 생성 및 작성
+
+    23) server안에 files 폴더생성
+    24) files 폴더 안에 articles(게시물사진), profiles(프로필사진) 폴더생성
+
+    25) routes에 users.js는 필요없으니 삭제
+    26) routes의 index.js 작성
