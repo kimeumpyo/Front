@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const jwt = require("jsonwevtoken");
+const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 
 // 1. Schema : 데이터의 구조
-const UserSchema = new Schema({
+const userSchema = new Schema({
   // 1번째 객체
   // 이름 최소길이3 ~ 최대길이100
   username: { type: String, required: true, minLength: 3, maxLength: 100 },
@@ -29,9 +29,9 @@ const UserSchema = new Schema({
 
 // 2. 컬렉션 조인(Join)
 userSchema.virtual('isFollowing', {
-  ref: "Follow",
-  localField: "_id",
-  foreignField: "following",
+  ref: 'Follow',
+  localField: '_id',
+  foreignField: 'following',
   justOne: true
 })
 
@@ -63,4 +63,4 @@ userSchema.methods.checkPassword = function (password) {
   return this.password === hashedPassword;
 }
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

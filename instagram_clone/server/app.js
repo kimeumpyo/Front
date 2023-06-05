@@ -18,7 +18,7 @@ const mongoose = require("mongoose");
 // 압축기능 제공
 const compression = require("compression");
 // HTTP 요청 헤더를 위한 보안기능을 제공한다
-const helmet = require("helmet");
+const helmet = require('helmet');
 // 환경변수를 사용할 수 있는 환경을 제공한다
 require("dotenv").config();
 

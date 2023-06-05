@@ -32,8 +32,8 @@ router.get("/", (req, res)=>{
 // USERS 
 router.post('/users', userController.create); 
 // auth : 인증이 필요한 라우터
-router.put('/user', auth, userController.update); 
-router.post('/user/login', userController.login); 
+router.put('/user', auth, userController.update);
+router.post('/user/login', userController.login);
 
 // ARTICLES
 router.get('/feed', auth, articleController.feed) 
