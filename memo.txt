@@ -88,3 +88,49 @@
 
     참고 사이트
     https://www.passportjs.org/packages/
+
+    27) server안에 seed.js 생성 및 작성
+    28) files에 이미지파일을 넣어준다
+
+    29) 터미널에서 server로 경로를 이동
+
+    30) 터미널에 
+    node seed mongodb://127.0.0.1:27017/instagram_clone_db 를 입력
+    'instagram_clone_db 이부분이 폴더이름'
+
+    31) package.json 에서 scripts에 
+    "devstart": "nodemon ./bin/www" 작성 (실행시키기 전에 작성필요!)
+
+    32) 터미널에서 npm run devstart 작성
+
+    33) postman 실행
+        - Collections 에서 + 버튼 추가 
+        - 이름 변경후 GET구간에 localhost:3000/api 작성
+        - send 버튼 클릭
+
+    34) userController.js 유효성 검사 문장작성
+        - findOne (MongoDB) 에 데이터가 있는지 확인
+
+    35) postman에서 새로운파일 추가
+        - post
+        - localhost:3000/api/users
+        - body
+        - raw
+        - Json 형식
+
+    36) 형식에 맞춰서 작성
+        예) 실패
+            {
+            "username": "bunny",
+            "email": "bunny@example.com",
+            "password": "123",
+            "fullName": "토끼"
+            } 
+        예) 성공
+            {
+            "username": "bunny",
+            "email": "bunny@example.com",
+            "password": "12345",
+            "fullName": "토끼"
+            }     
+    
