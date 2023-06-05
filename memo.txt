@@ -119,7 +119,7 @@
         - Json 형식
 
     36) 형식에 맞춰서 작성
-        예) 실패
+        예) 실패 (password 최소길이가 5이기 때문에 실패!)
             {
             "username": "bunny",
             "email": "bunny@example.com",
