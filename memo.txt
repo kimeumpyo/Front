@@ -178,4 +178,10 @@
         - auth
         - Bearer token 확인
 
+    42) postman프로그램에서 favorite 파일 추가
+        - post
+        - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e/favorite
 
+    43) postman프로그램에서 favorite 파일 추가
+        - delete
+        - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e/favorite

@@ -54,7 +54,7 @@ exports.findOne = async (req, res, next) => {
       })
       .populate({
         path: 'commentCount'  // Comment 컬렉션과 조인 (댓글 갯수)
-      })  
+      })
 
     if (!article) { // 게시물이 없다면!
       const err = new Error("Article not found");
@@ -76,7 +76,66 @@ exports.create = [];
 exports.delete = async (req, res, next) => { };
 
 // 7. 좋아요
-exports.favorite = async (req, res, next) => { };
+exports.favorite = async (req, res, next) => {
+  try {
+    // 좋아요 처리를 할 게시물을 검색한다
+    const article = await Article.findById(req.params.id);
+
+    if (!article) { // 게시물이 존재하지 않을 때
+      const err = new Error("Article not found");
+      err.status = 404; // NotFound
+      throw err;
+    }
+
+    // 이미 좋아요 한 게시물인지 확인한다
+    const _favorite = await Favorite
+      // req.user : 로그인 유저 객체
+      .findOne({ user: req.user._id, article: article._id })
+
+    // 처음 좋아요 요청한 게시물이면
+    if (!_favorite) {
+      const favorite = new Favorite({
+        user: req.user._id,
+        article: article._id
+      })
+      await favorite.save(); // Favorite의 도큐먼트를 생성한다
+
+      article.favoriteCount++; // 게시물의 좋아요수를 1증가시킨다
+      await article.save(); // 변경사항을 저장한다
+    }
+
+    res.json({ article }) // 좋아요 처리를 완료한 게시물을 전송한다
+
+  } catch (error) {
+    next(error)
+  }
+};
 
 // 8. 좋아요 취소
-exports.unfavorite = async (req, res, next) => { };
+exports.unfavorite = async (req, res, next) => { 
+  try {
+    // 좋아요 취소할 게시물을 검색한다
+    const article = await Article.findById(req.params.id);
+
+    if (!article) { // 게시물이 존재하지 않을 때
+      const err = new Error("Article not found");
+      err.status = 404; // NotFound
+      throw err;
+    }
+
+    const favorite = await Favorite
+      .findOne({ user: req.user._id, article: article._id });
+
+    if (favorite) { // 좋아요 처리가 된 게시물이 맞으면
+      await favorite.deleteOne(); // Favorite의 도큐먼트를 삭제한다
+
+      article.favoriteCount--; // 게시물의 좋아요수를 1감소시킨다
+      await article.save(); // 변경사항을 저장한다
+    }
+
+    res.json({ article }); // 좋아요 취소를 완료한 게시물을 전송한다
+
+  } catch (error) {
+    next(error)
+  }
+};
