@@ -111,7 +111,7 @@
     34) userController.js 유효성 검사 문장작성
         - findOne (MongoDB) 에 데이터가 있는지 확인
 
-    35) postman에서 새로운파일 추가
+    35) postman프로그램에서 users파일 추가
         - post
         - localhost:3000/api/users
         - body
@@ -132,5 +132,50 @@
             "email": "bunny@example.com",
             "password": "12345",
             "fullName": "토끼"
-            }     
+            } 
+
+    37)  postman프로그램에서 login파일 추가  .
+        - post
+        - localhost:3000/api/user/login
+        - body
+        - raw
+        - Json 형식
+        형식에 맞춰서 작성)
+        {
+            "email": "bunny@example.com",
+            "password": "12345"
+        }
+
+        routes -> index.js파일 참고
     
+    38) postman프로그램에서 user 파일 추가
+        - put
+        - localhost:3000/api/user
+        - body
+        - raw
+        - Json 형식
+        - auth 에서 type Bearer token에서 
+            로그인 할때 사용했던 토큰을 붙여넣어준다
+            
+        - 형식에 맞춰서 작성)
+        {
+            "bio": "안녕하세요 ~.~"
+        }
+
+    39) articleController.js 작성
+    
+    40) postman프로그램에서 articles 파일 추가
+        - GET
+        - localhost:3000/api/articles
+        - auth
+        - Bearer token 확인
+        - localhost:3000/api/articles?username=cat 확인
+
+    41) postman프로그램에서 article 파일 추가
+        - GET
+        - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e
+            647dbe86cfa0b9b259a37d7e : 가장최신 게시물_id
+        - auth
+        - Bearer token 확인
+
+

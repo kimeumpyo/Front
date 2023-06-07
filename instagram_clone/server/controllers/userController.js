@@ -95,9 +95,9 @@ exports.create = [
 
       // 유저에 데이터에 저장
       await user.save();
-      
+
       // response 서버응답 클라이언트에게 생성한 객체를 전송한다
-      res.json({user});
+      res.json({ user });
 
     } catch (error) {
       next(error) // 전달받은 에러를 에러 핸들러에 전달한다 (app.js)
@@ -106,7 +106,91 @@ exports.create = [
 ];
 
 // 2. 정보 수정 로직
-exports.update = [];
+exports.update = [
+  fileHandler('profiles').single('avatar'), // 사진을 업로드했을 때
+  isValidUsername().custom(usernameInUse).optional(), // 유효성검사, 옵션
+  isValidEmail().custom(emailInUse).optional(),
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        const err = new Error();
+        err.errors = errors.array();
+        err.status = 400; // 검사 실패시 400 에러발생
+        throw err;
+      }
+
+      const _user = req.user; // req.user: user 도큐먼트 (auth 폴더 jwtStartegy에 6번째 참고)
+
+      if (req.file) {
+        // 파일이 있는 경우 user의 avatar(프로필 사진)을 업데이트 한다
+        _user.avatar = req.file.filename;
+      }
+
+      // user객체 중에서 클라이언트가 요청한 속성만 업데이트한다
+      // 참고 Object.assign) 
+      // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+      Object.assign(_user, req.body);
+
+      // 변경사항을 저장한다
+      await _user.save();
+
+      // 토큰 재생성 (유저데이터 업데이트때문)
+      const token = _user.generateJWT();
+
+      const user = {
+        username: _user.username,
+        email: _user.email,
+        fullName: _user.fullName,
+        avatar: _user.avatar,
+        bio: _user.bio,
+        token
+      }
+
+      res.json({ user })
+
+    } catch (error) {
+      next(error)
+    }
+  }
+];
 
 // 3. 로그인 로직
-exports.login = [];
+exports.login = [
+  // 11.
+  isValidEmail().custom(doesEmailExists), // 이메일 검사
+  isValidPassword().custom(doesPasswordMatch),  // 비밀번호 검사 
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req); // 유효선 검사 결과
+
+      if (!errors.isEmpty()) {
+        const err = new Error();
+        err.errors = errors.array();
+        err.status = 401; // 401 Unauthorized (인증 실패)
+        throw err;
+      }
+
+      const { email } = req.body;
+
+      const _user = await User.findOne({ email });
+
+      const token = _user.generateJWT(); // 로그인 토큰을 생성한다
+
+      const user = {
+        avatar: _user.avatar,
+        username: _user.username,
+        email: _user.email,
+        fullName: _user.fullName,
+        bio: _user.bio,
+        token
+      }
+
+      res.json({ user }) // 클라이언트에게 데이터 전송
+
+    } catch (error) {
+      next(error) // 에러 핸들러에 전달
+    }
+  }
+];
