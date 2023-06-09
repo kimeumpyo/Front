@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Follow = require('../models/Follow');
 const Article = require('../models/Article');
+const Favorite = require('../models/Favorite');
 
 // 1. 프로필 리스트 가져오기
 exports.find = async (req, res, next) => {
@@ -37,8 +38,23 @@ exports.find = async (req, res, next) => {
 
     // 특정 글자를 유저이름에 포함한 프로필 리스트
     if ('username' in req.query) {
+      // 정규식 사용
       where.username = new RegExp(req.query.username, 'i');
-    } 
+    }
+
+    // 프로필 검색
+    const profileCount = await User.count(where); // 프로필 갯수
+
+    const profiles = await User
+      .find(where, 'username fullName avatar bio')
+      .populate({
+        path: 'isFollowing', // Follow 컬렉션과 조인
+        match: { follower: req.user._id } // 로그인 유저가 팔로우 중인 프로필인지 확인 가능
+      })
+      .limit(limit)
+      .skip(skip)
+
+    res.json({ profiles, profileCount });
 
   } catch (error) {
     next(error);
@@ -46,7 +62,55 @@ exports.find = async (req, res, next) => {
 };
 
 // 2. 프로필 한개 가져오기
-exports.findOne = async (req, res, next) => { };
+exports.findOne = async (req, res, next) => {
+  try {
+
+    // 프로필 검색
+    const _profile = await User
+      .findOne({ username: req.params.username }, 'username fullName avatar bio') // 검색조건, 필드
+      .populate({
+        path: 'isFollowing',  // Follow 컬렉션과 조인
+        match: { follower: req.user._id } // 로그인 유저가 팔로우 중인 프로필인지 확인 가능
+      })
+
+    if (!_profile) {  // 프로필이 존재하지 않을 경우
+      const err = new Error("Profile not found");
+      err.status = 404;
+      throw err;
+    }
+
+    const {
+      username,
+      fullName,
+      avatar,
+      bio,
+      isFollowing
+    } = _profile;
+
+    // 프로필 유저의 팔로잉 수
+    const followingCount = await Follow.count({ follower: _profile._id })
+    // 프로필 유저의 팔로워 수 
+    const followerCount = await Follow.count({ following: _profile._id })
+    // 프로필 유저의 댓글 수
+    const articleCount = await Article.count({ author: _profile._id })
+
+    const profile = {
+      username,
+      fullName,
+      avatar,
+      bio,
+      isFollowing,
+      followingCount,
+      followerCount,
+      articleCount
+    }
+
+    res.json({ profile });
+
+  } catch (error) {
+    next(error)
+  }
+};
 
 // 3. 팔로우 처리
 exports.follow = async (req, res, next) => {

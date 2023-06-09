@@ -235,5 +235,12 @@
         - localhost:3000/api/profiles/cat/follow
         - auth -> token
 
-    53) postman프로그램에서 profiles 파일 추가
+    53) postman프로그램에서 profiles 파일 추가 (조회)
         - get
+        - localhost:3000/api/profiles
+        - auth -> token
+    
+    54) postman프로그램에서 profiles_user 파일 추가 (개인조회)
+        - get
+        - localhost:3000/api/profiles/cat
+        - auth -> token
