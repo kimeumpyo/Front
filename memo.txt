@@ -178,10 +178,62 @@
         - auth
         - Bearer token 확인
 
-    42) postman프로그램에서 favorite 파일 추가
+    42) postman프로그램에서 favorite_like 파일 추가
         - post
         - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e/favorite
 
-    43) postman프로그램에서 favorite 파일 추가
+    43) postman프로그램에서 favorite_delete 파일 추가
         - delete
         - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e/favorite
+
+    44) postman프로그램에서 articles_inserte 파일 추가
+        - post
+        - localhost:3000/api/articles
+        - auth token
+        - body -> form-data
+        - photos 와 description 작성
+    
+    45) postman프로그램에서 articles_delete 파일 추가
+        - delete
+        - localhost:3000/api/articles/6482ff00558b8cd4f545dad0 생성했던이미지 아이디(_id)
+        - auth token
+    
+    46) postman프로그램에서 feed 파일 추가
+        - get
+        - localhost:3000/api/feed
+        - 게시물 확인
+
+    47) commentController 작성
+
+    48) postman프로그램에서 comment 파일 추가
+        - post
+        - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e/comments
+        - auth token
+        - body -> raw -> json
+        - 형식에 맞춰서 작성)
+            {
+                "content": "굿굿"
+            }
+    
+    49) postman프로그램에서 comment_delete 파일 추가
+        - delete
+        - localhost:3000/api/comments/648315ccc9d482dfb294ba3c
+
+    50) postman프로그램에서 comment 파일 추가 (조회)
+        - get
+        - localhost:3000/api/articles/647dbe86cfa0b9b259a37d7e/comments
+
+        profileController.js 작성
+
+    51) postman프로그램에서 follow 파일 추가
+        - post
+        - localhost:3000/api/profiles/cat/follow
+        - auth -> token
+
+    52) postman프로그램에서 follow_delete 파일 추가 (삭제)
+        - delete
+        - localhost:3000/api/profiles/cat/follow
+        - auth -> token
+
+    53) postman프로그램에서 profiles 파일 추가
+        - get

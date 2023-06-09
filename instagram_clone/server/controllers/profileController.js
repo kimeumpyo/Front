@@ -3,13 +3,118 @@ const Follow = require('../models/Follow');
 const Article = require('../models/Article');
 
 // 1. 프로필 리스트 가져오기
-exports.find = async (req, res, next) => { };
+exports.find = async (req, res, next) => {
+  try {
+
+    const where = {};
+    const limit = req.query.limit || 10;
+    const skip = req.query.skip || 0;
+
+    // 특정 유저가 팔로우하는 프로필 리스트
+    if ('following' in req.query) {
+      const user = await User.findOne({ username: req.query.following });
+      const follows = await Follow
+        .find({ follower: user._id })
+
+      where._id = follows.map(follow => follow.following);
+    }
+
+    // 특정 유저를 팔로우 하는 프로필 리스트
+    if ('followers' in req.query) {
+      const user = await User.findOne({ username: req.query.followers });
+      const follows = await Follow
+        .find({ following: user._id })
+
+      where._id = follows.map(follow => follow.follower);
+    }
+
+    // 특정 게시물을 좋아하는 프로필 리스트
+    if ('favorite' in req.query) {
+      const favorites = await Favorite.find({ article: req.query.favorite })
+
+      where._id = favorites.map(favorite => favorite.user);
+    }
+
+    // 특정 글자를 유저이름에 포함한 프로필 리스트
+    if ('username' in req.query) {
+      where.username = new RegExp(req.query.username, 'i');
+    } 
+
+  } catch (error) {
+    next(error);
+  }
+};
 
 // 2. 프로필 한개 가져오기
 exports.findOne = async (req, res, next) => { };
 
 // 3. 팔로우 처리
-exports.follow = async (req, res, next) => { };
+exports.follow = async (req, res, next) => {
+
+  try {
+
+    // 본인을 팔로우 요청 한 경우
+    if (req.user.username === req.params.username) {
+      const err = new Error('Cannot Follow yourself')
+      err.status = 400;
+      throw err;
+    }
+
+    // 팔로우할 프로필을 검색한다
+    const profile = await User
+      .findOne({ username: req.params.username }, 'username fullName avatar bio');
+
+    if (!profile) { // 프로필이 존재하지 않을 경우
+      const err = new Error('Profile not found')
+      err.status = 404;
+      throw err;
+    }
+
+    // 이미 팔로우 중인 프로필일 경우
+    const _follow = await Follow
+      .findOne({ follower: req.user._id, following: profile._id })
+
+    if (!_follow) { // 새 팔로우인 경우
+      const follow = new Follow({
+        follower: req.user._id,
+        following: profile._id
+      })
+
+      await follow.save(); // 저장
+    }
+
+    res.json({ profile });  // 방금 팔로우한 프로필을 전송한다
+
+  } catch (error) {
+    next(error)
+  }
+};
 
 // 4. 팔로우 취소 처리
-exports.unfollow = async (req, res, next) => { };
+exports.unfollow = async (req, res, next) => {
+  try {
+
+    const username = req.params.username;
+    // 팔로우를 취소할 프로필을 검색한다
+    const profile = await User.findOne({ username }, 'username fullName avatar bio'); // 검색조건, 필드선택
+
+    if (!profile) { //  프로필이 존재하지 않는 경우
+      const err = new Error('Profile not found')
+      err.status = 404;
+      throw err;
+    }
+
+    // 현재 팔로우 중인 프로필인지 확인한다
+    const follow = await Follow
+      .findOne({ follower: req.user._id, following: profile._id });
+
+    if (follow) { // 팔로우중이면 팔로우를 취소한다
+      await follow.deleteOne();
+    }
+
+    res.json({ profile });  // 팔로우를 취소한 프로필을 전송한다
+
+  } catch (error) {
+    next(error)
+  }
+};
