@@ -244,3 +244,56 @@
         - get
         - localhost:3000/api/profiles/cat
         - auth -> token
+    
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+
+    55) instagram_clone 폴더에서
+        - npx create-react-app client 를 해서 폴더를 만들어준다
+        - client 경로에 
+            - npm install react-router-dom
+            - npm istaill tailwindcss
+            - npx tailwindcss init 
+        - tailwind.config.js 에서 content 에 "./src/**/*.js" 적어준다
+
+    56) src -> index.css 작성
+        -   @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+
+    57) .env파일 생성
+        REACT_APP_SERVER="http://localhost:3000/api"
+
+    58) public 에서
+        - index.html title을 Instagram으로 수정
+        - favicon.ico을 넣어준다 
+        - images 폴더생성 logo 이미지 넣기
+
+    59) src폴더에 utils생성
+        - requests.js 생성 및 작성 (요청함수)
+    
+    60) src폴더에 components폴더생성
+        
+        (생성 및 작성)
+        - Accounts.js 
+        - ArticleCreate.js 
+        - ArticleTemplate.js
+        - ArticleView.js
+        - AuthContext.js
+        - AuthProvider.js
+        - AuthRequired.js
+        - Carousel.js
+        - Comments.js
+        - Feed.js
+        - FollowerList.js
+        - FollowingList.js
+        - Layout.js
+        - Login.js
+        - NotFound.js
+        - Profile.js
+        - Search.js
+        - SignUp.js
+        - Spinner.js
+        - Timeline.js
+
+
