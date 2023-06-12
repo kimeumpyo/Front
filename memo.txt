@@ -296,4 +296,9 @@
         - Spinner.js
         - Timeline.js
 
+    61) src 
+        - index.js 작성
+        - App.js 작성
+       
+
 
