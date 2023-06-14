@@ -33,14 +33,18 @@ export default function Register() {
         _error.username = "아이디는 영어 소문자와 언더스코어, 숫자만 사용 가능합니다"
       }
 
+      // 유효성 검사 실패
       if(Object.keys(_error).length > 0){
         throw _error;
       }
 
+      // 유저 생성 요청 (유효성 검사 통과시)
       await createUser(newUser);
 
-      alert(`Welcome ${fullName}!`);
+      // 가입 완료 메시지
+      alert(`${fullName}님의 가입이 완료되었습니다`);
 
+      // 로그인페이지로 이동
       navigate('/');
 
     } catch (error) {
