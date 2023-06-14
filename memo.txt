@@ -274,7 +274,7 @@
     
     60) src폴더에 components폴더생성
         
-        (생성 및 작성)
+        (생성)
         - Accounts.js 
         - ArticleCreate.js 
         - ArticleTemplate.js
@@ -299,6 +299,14 @@
     61) src 
         - index.js 작성
         - App.js 작성
+
+    62) (작성)
+        - AuthProvider.js 
+        - AuthRequired.js  
+        - NotFound.js
+        - Spinner.js
+        - Login.js
+
        
 
 
