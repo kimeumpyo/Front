@@ -19,7 +19,35 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   // 로그인 처리
-  async function handleSubmit(e) {}
+  async function handleSubmit(e) { 
+    try {
+      // 새로고침을 방지
+      e.preventDefault(); 
+      // 에러 초기화
+      setError(null);
+
+      console.log(email, password);
+
+      // 응답 객체를 user변수에 담는다
+      const {user } = await signIn(email, password);
+
+      console.log(user);
+
+      // 클라이언트의 user를 응댑객체로 갱신한다
+      setUser(user)
+
+      // 로그인에 성공한 이메일을 로컬스토리지에 저장한다
+      localStorage.setItem("email", email);
+
+      // 피드 페이지로 이동한다
+      setTimeout(()=> {
+        navigate("/")
+      }, 200);
+
+    }catch(error){
+      setError(error)
+    }
+  }
 
   // 타이틀 업데이트
   useEffect(() => {
@@ -28,10 +56,12 @@ export default function Login() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xs p-4 mt-16 mx-auto">
+      {/* 로고 이미지 */}
       <div className="mt-4 mb-4 flex justify-center">
         <img src="/images/logo.png" className="w-36" />
       </div>
 
+      {/* 이메일 입력란 */}
       <div className="mb-2">
         <label className="block">
           <input
@@ -44,6 +74,7 @@ export default function Login() {
         </label>
       </div>
 
+      {/* 비밀번호 입력란 */}
       <div className="mb-2">
         <label className="block relative">
           <input
@@ -51,9 +82,11 @@ export default function Login() {
             className="border px-2 py-1 w-full rounded"
             value={password}
             placeholder="password"
+            // 패스워드 자동으로 저장하는걸 방지
             autoComplete="new-password"
             onChange={({ target }) => setPassword(target.value)}
           />
+          {/* 비밀번호를 입력한 경우에 토글버튼을 보인다 */}
           {password.trim().length > 0 && (
             <button
               type="button"
@@ -65,6 +98,25 @@ export default function Login() {
           )}
         </label>
       </div>
+
+      {/* 제출버튼 */}
+      <button
+        type="submit"
+        className="bg-blue-500 text-sm text-white font-semibold rounded-lg px-4 py-2 w-full disabled:opacity-[0.5]"
+        // 이메일이 없거나 패스워드가 5자 이하이면 비활성화
+        disabled={!email.trim() || password.trim().length < 5}
+      >
+        로그인
+      </button>
+
+      {/* 에러 메시지 */}
+      {error && <p className="my-4 text-center text-red-500">{error.message}</p>}
+
+      {/* 가입 링크 */}
+      <p className="text-center my-4">
+        계정이 없으신가요 ? {" "}
+        <Link to="/accounts/signup" className="text-blue-500 font-semibold">가입하기</Link>
+      </p>
     </form>
   )
 }
