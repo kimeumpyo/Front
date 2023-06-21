@@ -14,15 +14,15 @@ export default function ArticleCreate({ active, setActive }) {
   console.log(files);
 
   // 폼 제출 처리
-  async function handleSubmit(e) { 
-    try{
+  async function handleSubmit(e) {
+    try {
       e.preventDefault();
 
       const formData = new FormData();
 
       // 폼 데이터에 전송할 데이터를 추가한다
 
-      files.forEach(file=>{
+      files.forEach(file => {
         formData.append('photos', file);
       })
 
@@ -34,15 +34,15 @@ export default function ArticleCreate({ active, setActive }) {
       // 업로드가 완료되면 피드로 이동한다
       navigate("/");
 
-    }catch(error){
+    } catch (error) {
       alert(error)
     }
   }
 
   // 모달창 닫기
-  function close(e) { 
+  function close(e) {
     // e.currentTarget: 오버레이
-    if(e.target === e.currentTarget){
+    if (e.target === e.currentTarget) {
       setActive(false);
     }
   }
@@ -104,13 +104,13 @@ export default function ArticleCreate({ active, setActive }) {
                 htmlFor="discription"
                 className="block font-semibold"
               >
-              사진에 대한 설명을 입력해주세요
+                사진에 대한 설명을 입력해주세요
               </label>
               <textarea
                 rows="2"
-                id="discription"
+                id="description"
                 className="block w-full px-2 py-1 rounded border"
-                onClick={({ target }) => setDescription(target.value)}
+                onChange={({ target }) => setDescription(target.value)}
                 value={description}
               />
             </div>

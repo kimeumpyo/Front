@@ -22,14 +22,66 @@ export default function ArticleView() {
       })
   }, [])
 
-  console.log("article",article);
+  console.log("article", article);
 
   // 좋아요 처리
-  async function handleFavorite(id) { }
+  console.log("id", id)
+
+  async function handleFavorite(id) {
+
+    try {
+      // 서버에 좋아요 처리 요청
+      await favorite(id)
+
+      // article 업데이트
+      const updatedArticle = {
+        ...article,
+        isFavorite: true,
+        favoriteCount: article.favoriteCount + 1
+      }
+
+      setArticle(updatedArticle);
+
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   // 좋아요 취소 처리
-  async function handleUnfavorite(id) { }
+  async function handleUnfavorite(id) {
+    console.log("id", id)
+    try{
+
+      // 서버에 좋아요 취소처리 요청
+      await unfavorite(id)
+
+      // article 업데이트
+      const updatedArticle = {
+        ...article,
+        isFavorite: false,
+        favoriteCount: article.favoriteCount - 1
+      }
+
+      setArticle(updatedArticle);
+
+    }catch(error){
+      alert(error)
+    }
+
+  }
   // 게시물 삭제 처리
-  async function handleDelete(id) { }
+  async function handleDelete(id) {
+    try {
+      // 서버에 게시물 삭제 요청
+      await deleteArticle(id);
+      
+      // 피드로 이동
+      navigate('/', { replace: true });
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   if (!article) {
     return <Spinner />

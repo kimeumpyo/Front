@@ -11,7 +11,7 @@ export default function Accounts() {
 
   console.log(updatedUser) // 업데이트 정보 추적
 
-  
+
 
   // 폼 제출처리
   async function handleSubmit(e) {
