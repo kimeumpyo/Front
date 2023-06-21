@@ -313,10 +313,10 @@
         - AuthProvider.js
         - Accounts.js
         - ArticleCreate.js
-        - ArticleTemplate
-        - Carousel
-        - ArticleView
-        - Comments
+        - ArticleTemplate.js
+        - Carousel.js
+        - ArticleView.js
+        - Comments.js
         
     (참고)
         Blob 객체 (Binary Large Object)
