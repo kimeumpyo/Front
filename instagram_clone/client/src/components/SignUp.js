@@ -24,17 +24,17 @@ export default function Register() {
       const _error = {};
 
       // indexOf문자를 리턴하는 @가 없으면 -1을 리턴
-      if(email.indexOf("@") === -1){
+      if (email.indexOf("@") === -1) {
         _error.email = "이메일이 올바르지 않습니다";
       }
 
       // match 문자열 또는 정규식 
-      if(username.match(/[^a-z0-9_]/)){
+      if (username.match(/[^a-z0-9_]/)) {
         _error.username = "아이디는 영어 소문자와 언더스코어, 숫자만 사용 가능합니다"
       }
 
       // 유효성 검사 실패
-      if(Object.keys(_error).length > 0){
+      if (Object.keys(_error).length > 0) {
         throw _error;
       }
 

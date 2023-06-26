@@ -50,7 +50,7 @@ export default function ArticleView() {
   // 좋아요 취소 처리
   async function handleUnfavorite(id) {
     console.log("id", id)
-    try{
+    try {
 
       // 서버에 좋아요 취소처리 요청
       await unfavorite(id)
@@ -64,24 +64,26 @@ export default function ArticleView() {
 
       setArticle(updatedArticle);
 
-    }catch(error){
+    } catch (error) {
       alert(error)
     }
 
   }
+
   // 게시물 삭제 처리
   async function handleDelete(id) {
     try {
       // 서버에 게시물 삭제 요청
       await deleteArticle(id);
-      
+
       // 피드로 이동
       navigate('/', { replace: true });
-    
+
     } catch (error) {
       alert(error)
     }
   }
+  console.log("확인", id)
 
   if (!article) {
     return <Spinner />

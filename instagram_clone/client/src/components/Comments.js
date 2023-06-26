@@ -50,7 +50,24 @@ export default function Comments() {
   }
 
   // 댓글 삭제
-  async function handleDelete(id) { }
+  async function handleDelete(id) {
+    console.log("댓글 삭제", id)
+    try {
+      // 서버 요청
+      await deleteComment(id);
+
+      // comments 업데이트
+      const remainingComments = comments.filter(comment => comment.id !== id);
+
+      setComments(remainingComments);
+
+      // commentCount를 1 감소시킨다
+      setCommentCount(commentCount - 1);
+
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   // 댓글 리스트
   const commentList = comments.map(comment => (
@@ -138,7 +155,14 @@ function Comment({ comment, handleDelete }) {
   const [active, setActive] = useState(false);
 
   // 클릭 이벤트 처리
-  async function handleClick() { }
+  async function handleClick() {
+    try {
+      await handleDelete(comment.id);
+      setActive(false); // 모달창 끄기
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   // 모달 창 닫기
   function close(e) {
@@ -201,10 +225,10 @@ function Comment({ comment, handleDelete }) {
         <svg
           className="w-1 cursor-pointer"
           onClick={() => setActive(true)}
-          xmlns="http://www.w3.org/2000/svg" 
+          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 128 512"
-          >
-          <path d="M64 360C94.93 360 120 385.1 120 416C120 446.9 94.93 472 64 472C33.07 472 8 446.9 8 416C8 385.1 33.07 360 64 360zM64 200C94.93 200 120 225.1 120 256C120 286.9 94.93 312 64 312C33.07 312 8 286.9 8 256C8 225.1 33.07 200 64 200zM64 152C33.07 152 8 126.9 8 96C8 65.07 33.07 40 64 40C94.93 40 120 65.07 120 96C120 126.9 94.93 152 64 152z"/>
+        >
+          <path d="M64 360C94.93 360 120 385.1 120 416C120 446.9 94.93 472 64 472C33.07 472 8 446.9 8 416C8 385.1 33.07 360 64 360zM64 200C94.93 200 120 225.1 120 256C120 286.9 94.93 312 64 312C33.07 312 8 286.9 8 256C8 225.1 33.07 200 64 200zM64 152C33.07 152 8 126.9 8 96C8 65.07 33.07 40 64 40C94.93 40 120 65.07 120 96C120 126.9 94.93 152 64 152z" />
         </svg>
       </div>
     </li>

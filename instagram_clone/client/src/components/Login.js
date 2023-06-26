@@ -19,17 +19,17 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   // 로그인 처리
-  async function handleSubmit(e) { 
+  async function handleSubmit(e) {
     try {
       // 새로고침을 방지
-      e.preventDefault(); 
+      e.preventDefault();
       // 에러 초기화
       setError(null);
 
       console.log(email, password);
 
       // 응답 객체를 user변수에 담는다
-      const {user } = await signIn(email, password);
+      const { user } = await signIn(email, password);
 
       console.log(user);
 
@@ -40,11 +40,11 @@ export default function Login() {
       localStorage.setItem("email", email);
 
       // 피드 페이지로 이동한다
-      setTimeout(()=> {
+      setTimeout(() => {
         navigate("/")
       }, 200);
 
-    }catch(error){
+    } catch (error) {
       setError(error)
     }
   }
