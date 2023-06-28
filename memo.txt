@@ -318,6 +318,8 @@
         - ArticleView.js
         - Comments.js
         - Search.js
+        - Feed.js
+        - FollowingList.js
         
     (참고)
         Blob 객체 (Binary Large Object)
@@ -325,3 +327,11 @@
     (참고)
         PWA
         Progressive Web App
+
+
+    참고
+    디플로이
+
+    1. 데이터베이스 - MongoDB Arlas (몽고 DB 클라우드)
+    2. API 서버 - 대부분 유료, Railway
+    3. 프로트엔드 - 깃헙페이지, Netlify
